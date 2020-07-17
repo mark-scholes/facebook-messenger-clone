@@ -4,6 +4,7 @@ import Message from "./components/Message";
 import db from "./Firebase";
 import "./App.css";
 import firebase from "firebase";
+import Flipmove from "react-flip-move";
 
 const App = () => {
   const [input, setInput] = useState("");
@@ -19,7 +20,9 @@ const App = () => {
       //this will be ordered in reverse for now until auto scroll is implimented
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
-        setMessages(snapshot.docs.map((doc) => doc.data()));
+        setMessages(
+          snapshot.docs.map((doc) => ({ id: doc.id, message: doc.data() }))
+        );
       });
   }, []);
 
@@ -53,10 +56,11 @@ const App = () => {
           </Button>
         </FormControl>
       </form>
-
-      {messages.map((message) => (
-        <Message username={username} message={message} />
-      ))}
+      <Flipmove>
+        {messages.map(({ id, message }) => (
+          <Message key={id} username={username} message={message} />
+        ))}
+      </Flipmove>
     </div>
   );
 };
