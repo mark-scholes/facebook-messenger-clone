@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Button, FormControl, InputLabel, Input } from "@material-ui/core";
+import { FormControl, Input, IconButton } from "@material-ui/core";
+import SendIcon from "@material-ui/icons/Send";
 import Message from "./components/Message";
 import db from "./Firebase";
 import "./App.css";
@@ -12,7 +13,7 @@ const App = () => {
   const [username, setUserName] = useState("");
 
   useEffect(() => {
-    setUserName(prompt("Enter you name"));
+    setUserName(prompt("Enter you name..."));
   }, []);
 
   useEffect(() => {
@@ -39,21 +40,23 @@ const App = () => {
 
   return (
     <div className="App">
+      <img
+        alt="facebook_logo"
+        src="https://facebookbrand.com/wp-content/uploads/2018/09/Header-e1538151782912.png?v=100&h=100"
+      />
       <h1> FaceBook Messenger Clone</h1>
       <h2>Welcome {username}</h2>
-      <form>
-        <FormControl>
-          <InputLabel>message...</InputLabel>
-          <Input value={input} onChange={(e) => setInput(e.target.value)} />
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-            onClick={sendMessage}
-            disabled={!input}
-          >
-            Send
-          </Button>
+      <form className="app__form">
+        <FormControl className="app__formControl">
+          <Input
+            placeholder="Enter a message..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+
+          <IconButton type="submit" onClick={sendMessage} disabled={!input}>
+            <SendIcon />
+          </IconButton>
         </FormControl>
       </form>
       <Flipmove>
